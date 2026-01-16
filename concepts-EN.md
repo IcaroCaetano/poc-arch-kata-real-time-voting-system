@@ -170,4 +170,143 @@ In our case:
 
 ## 🗣️ Short explanation for the team (30 seconds)
 
-“We use CQRS because writing votes and reading results are completely different problems. The write side is optimized to avoid data loss and ensure integrity. The read side is optimized to respond quickly and scale. This allows us to handle huge spikes without compromising consistency or real-time accuracy.”
+“We use CQRS because writing votes and reading results are completely different problems. The write side is optimized to avoid data loss and ensure integrity. The read side is optimized for fast response and scalability. This allows us to support huge spikes without compromising consistency or real-time.”
+
+-
+# 🧠 What does Exactly-Once Semantics mean?
+
+*Exactly-once means:*
+
+*Each event* is processed only once, not zero, not twice — exactly once.
+
+That is:
+
+- The event cannot be lost
+
+- The event cannot be processed twice
+
+- Even with:
+
+- failures
+
+- retries
+
+- crashes
+
+- unstable network
+
+## 🔁 The real problem that exactly-once solves
+
+In distributed systems, failures are normal.
+
+Example without exactly-once:
+
+1. A vote arrives
+
+2. The system processes it
+
+3. The system crashes before confirming
+
+4. The event is resent
+
+5. The vote is counted twice
+
+Or the reverse:
+
+- The event disappears → lost vote
+
+### 📌 The three classic semantics
+
+### 1️⃣ At-most-once
+
+- Processes at most once
+
+- May miss events
+
+### ❌ Unacceptable for voting
+
+### 2️⃣ At-least-once
+
+- Processes one or more times
+
+- Does not miss events
+
+### ❌ May count duplicate votes
+
+### 3️⃣ Exactly-once ✅
+
+- Processes exactly once
+
+- Does not miss events
+
+- Does not duplicate votes
+
+- ✔️ Required for Voting
+
+## 🧬 Exactly-once in your voting system
+
+In your design, exactly-once is guaranteed in layers, not by magic.
+
+### 1️⃣ Kafka as a base
+
+Kafka:
+
+- Persists events
+
+- Maintains partition ordering
+
+- Allows replay
+
+But Kafka alone doesn't guarantee exactly-once.
+
+## 2️⃣ Kafka Streams (EOS v2)
+
+Kafka Streams offers Exactly-Once Semantics (EOS):
+
+It guarantees that:
+
+- Event reading
+
+- State Store updating
+
+- Result production
+
+- Offset commit
+
+👉 Everything happens atomically.
+
+If the process fails:
+
+- Either everything was applied
+
+- Or nothing was applied
+
+### 3️⃣ State Stores for Deduplication
+
+State Stores:
+
+- Store the local processing state
+
+- Record which userIds have already voted
+
+When a vote arrives:
+
+- If the user already exists in the store → reject
+
+- If it doesn't exist → process and save
+
+This avoids:
+
+- Retries
+
+- Duplicate events
+
+- Accidental replays
+
+### 4️⃣ Partitioning by UserId
+
+When partitioning by userId:
+
+- All votes from the same user go to the same partition
+
+- We maintain guaranteed order
