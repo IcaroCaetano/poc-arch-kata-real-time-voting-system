@@ -9,7 +9,7 @@ Este documento consolida todos os entregáveis gerados para a **Seção 4.1 (Ove
 ### 1️⃣ Diagrama de Arquitetura Geral (Overall Architecture)
 
 #### 📄 Documentação Completa
-- **Arquivo**: [`overall-architecture-diagram-PT.md`](./overall-architecture-diagram-PT.md)
+- **Arquivo**: [`overall-architecture-diagram-PT.md`](./overall-architecture-diagram/overall-architecture-diagram-PT.md)
 - **Conteúdo**:
   - Diagrama Mermaid interativo
   - Decisões arquiteturais chave
@@ -19,13 +19,13 @@ Este documento consolida todos os entregáveis gerados para a **Seção 4.1 (Ove
   - Estratégias de escalabilidade
 
 #### 🖼️ Imagens do Diagrama
-- **PNG (Alta resolução)**: [`overall-architecture-diagram-PT.png`](./overall-architecture-diagram-PT.png) - 236 KB
+- **PNG (Alta resolução)**: [`overall-architecture-diagram-PT.png`](./overall-architecture-diagram/image/overall-architecture-diagram-PT.png) - 236 KB
   - Formato raster, ideal para apresentações e documentos
-- **SVG (Vetorial)**: [`overall-architecture-diagram-PT.svg`](./overall-architecture-diagram-PT.svg) - 44 KB
+- **SVG (Vetorial)**: [`overall-architecture-diagram-PT.svg`](./overall-architecture-diagram/image/overall-architecture-diagram-PT.svg) - 44 KB
   - Formato vetorial, escalável sem perda de qualidade
 
 **Preview do Diagrama:**
-![Diagrama de Arquitetura](./overall-architecture-diagram-PT.png)
+![Diagrama de Arquitetura](./overall-architecture-diagram/image/overall-architecture-diagram-PT.png)
 
 ---
 
