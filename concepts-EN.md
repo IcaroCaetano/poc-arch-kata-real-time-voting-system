@@ -310,3 +310,61 @@ When partitioning by userId:
 - All votes from the same user go to the same partition
 
 - We maintain guaranteed order
+
+- We eliminated race conditions
+
+### 5️⃣ Consistent writing to DynamoDB
+
+Processing only confirms the offset:
+
+- After updating the store
+
+- After persisting the vote
+
+- After updating the count
+
+This closes the exactly-once loop.
+
+## 📊 Flow summary view
+
+````text
+Event arrives
+
+↓ Kafka Streams reads
+
+↓ Checks State Store
+
+↓ Updates count
+
+↓ Persists in DynamoDB
+
+↓ Atomic commit
+````
+
+If something fails → automatic rollback.
+
+## ⚠️ Important point (always explain)
+
+Exactly-once does NOT mean:
+
+- Zero latency
+
+- Zero complexity
+
+- Zero cost
+
+It means:
+
+- More control
+
+- More state
+
+- More architectural discipline
+
+## 🗣️ Short explanation for the team (20–30 seconds)
+
+“Exactly-once means that each vote will be processed only once, even if there are failures, retries, or service outages. We use Kafka Streams with state stores and user partitioning to ensure that no vote is lost and none is counted twice.”
+
+## 🧠 Golden phrase for the technical review/panel
+
+“Exactly-once is not an isolated feature, it is an emergent property of the combination of transactional processing, local state, and offset control.”
