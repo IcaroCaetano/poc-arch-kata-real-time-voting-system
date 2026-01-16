@@ -32,7 +32,7 @@ Este documento consolida todos os entregáveis gerados para a **Seção 4.1 (Ove
 ### 2️⃣ Diagrama de Casos de Uso (Use Cases)
 
 #### 📄 Documentação Completa
-- **Arquivo**: [`use-case-diagram.md`](./use-case-diagram.md)
+- **Arquivo**: [`use-case-diagram-PT.md`](./use-case-diagram/use-case-diagram-PT.md)
 - **Conteúdo**:
   - Diagrama Mermaid com 21 casos de uso
   - Detalhamento completo de cada caso de uso
@@ -44,13 +44,13 @@ Este documento consolida todos os entregáveis gerados para a **Seção 4.1 (Ove
   - Priorização (MVP, Fase 2, Fase 3)
 
 #### 🖼️ Imagens do Diagrama
-- **PNG (Alta resolução)**: [`use-case-diagram.png`](./use-case-diagram.png) - 301 KB
+- **PNG (Alta resolução)**: [`use-case-diagram-PT.png`](./use-case-diagram/use-case-diagram-PT.png) - 301 KB
   - Formato raster, ideal para apresentações e documentos
-- **SVG (Vetorial)**: [`use-case-diagram.svg`](./use-case-diagram.svg) - 60 KB
+- **SVG (Vetorial)**: [`use-case-diagram-PT.svg`](.//use-case-diagram/use-case-diagram-PT.svg) - 60 KB
   - Formato vetorial, escalável sem perda de qualidade
 
 **Preview do Diagrama:**
-![Diagrama de Casos de Uso](./use-case-diagram.png)
+![Diagrama de Casos de Uso](.//use-case-diagram/use-case-diagram-PT.png)
 
 ---
 
@@ -181,7 +181,7 @@ Este documento consolida todos os entregáveis gerados para a **Seção 4.1 (Ove
 ## 🔗 Referências
 
 - **Documento Base**: [`overall-diagrams-PT.md`](./overall-diagrams-PT.md)
-- **Plano de Pesquisa**: [`plan.md`](./plan.md)
+- **Plano de Pesquisa**: [`plan-PT.md`](./plan-PT.md)
 - **Conceitos (PT)**: [`concepts-PT.md`](./concepts-PT.md)
 - **Conceitos (EN)**: [`concepts-EN.md`](./concepts-EN.md)
 
