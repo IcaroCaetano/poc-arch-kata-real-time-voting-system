@@ -10,115 +10,118 @@ Escrever dados e ler dados são problemas diferentes — então usamos modelos d
 
 Normalmente temos:
 
-Um único serviço
+- Um único serviço
 
-Um único modelo de dados
+- Um único modelo de dados
 
-O mesmo banco serve para:
+- O mesmo banco serve para:
 
-Escritas (INSERT / UPDATE)
+  - Escritas (INSERT / UPDATE)
 
-Leituras (SELECT)
+  - Leituras (SELECT)
 
-Problemas disso em sistemas grandes:
+*Problemas disso em sistemas grandes:*
 
-Escrita pesada afeta leitura
+- Escrita pesada afeta leitura
 
-Leitura pesada afeta escrita
+- Leitura pesada afeta escrita
 
-Modelo fica complexo
+- Modelo fica complexo
 
-Escalar fica caro e difícil
+- Escalar fica caro e difícil
 
 ## ✅ Com CQRS
 
 Separarmos o sistema em dois lados independentes:
 
-✍️ Command Side (Write Side)
+✍️ *Command Side (Write Side)*
 
 Responsável por:
 
-Receber comandos (ex: enviar voto)
+- Receber comandos (ex: enviar voto)
 
-Validar regras de negócio
+- Validar regras de negócio
 
-Persistir eventos/dados
+- Persistir eventos/dados
 
 Características:
 
-Otimizado para alta taxa de escrita
+- Otimizado para alta taxa de escrita
 
-Modelo simples
+- Modelo simples
 
-Consistência é prioridade
+- Consistência é prioridade
 
 ## 👀 Query Side (Read Side)
 
 Responsável por:
 
-Responder consultas (ex: resultado da votação)
+- Responder consultas (ex: resultado da votação)
 
-Fornecer dados já prontos para leitura
+- Fornecer dados já prontos para leitura
 
 Características:
 
-Otimizado para leituras rápidas
+- Otimizado para leituras rápidas
 
-Pode usar cache
+- Pode usar cache
 
-Pode ser eventualmente consistente
+- Pode ser eventualmente consistente
 
-##🧬 CQRS aplicado ao nosso sistema de votação
+## 🧬 CQRS aplicado ao nosso sistema de votação
 Write Side
 
-Vote Ingestion Service
+- Vote Ingestion Service
 
-Kafka
+- Kafka
 
-Kafka Streams
+- Kafka Streams
 
-DynamoDB
+- DynamoDB
 
 Objetivo:
 
-Nunca perder votos
+- Nunca perder votos
 
-Garantir exatamente um voto por usuário
+- Garantir exatamente um voto por usuário
 
-Garantir integridade
+- Garantir integridade
 
 Read Side
 
-Redis
+- Redis
 
-WebSocket / SSE
+- WebSocket / SSE
 
 Objetivo:
 
-Mostrar resultados em tempo real
+- Mostrar resultados em tempo real
 
-Responder rápido
+- Responder rápido
 
-Suportar milhões de usuários lendo ao mesmo tempo
+- Suportar milhões de usuários lendo ao mesmo tempo
 
 ## 📊 Visual simplificado
+
+````text
           WRITE SIDE (Commands)
 Usuário ───▶ API ───▶ Kafka ───▶ DynamoDB
                         │
                         ▼
           READ SIDE (Queries)
                    Redis ───▶ WebSocket ───▶ Usuário
+````
 
-🔥 Por que CQRS é essencial aqui?
-1️⃣ Escala independentemente
+## 🔥 Por que CQRS é essencial aqui?
+### 1️⃣ Escala independentemente
 
-Escrita: 250k votos/s
+- Escrita: 250k votos/s
 
-Leitura: milhões de usuários acompanhando
+- Leitura: milhões de usuários acompanhando
 
 Sem CQRS, um derruba o outro.
 
-2️⃣ Modelos de dados diferentes
+### 2️⃣ Modelos de dados diferentes
 
 Write:
 
@@ -128,38 +131,38 @@ Append-only
 
 Read:
 
-Dados agregados
+- Dados agregados
 
-Contadores prontos
+- Contadores prontos
 
-3️⃣ Performance
+### 3️⃣ Performance
 
-Escrita não depende de cache
+- Escrita não depende de cache
 
-Leitura não depende de joins ou cálculos
+- Leitura não depende de joins ou cálculos
 
-4️⃣ Resiliência
+### 4️⃣ Resiliência
 
 Se o Redis cair:
 
-Escrita continua funcionando
+- Escrita continua funcionando
 
 Se o Write estiver lento:
 
-Últimos dados ainda estão no cache
+- Últimos dados ainda estão no cache
 
-⚠️ Trade-off importante (sempre explique)
+## ⚠️ Trade-off importante (sempre explique)
 
 CQRS não garante leitura 100% consistente o tempo todo.
 
 No nosso caso:
 
-Durante a votação → eventual consistency
+- Durante a votação → eventual consistency
 
-Ao final → consistência forte (job de recontagem)
+- Ao final → consistência forte (job de recontagem)
 
 👉 Isso é uma decisão consciente, não um erro.
 
-🗣️ Explicação curta para o time (30 segundos)
+## 🗣️ Explicação curta para o time (30 segundos)
 
 “Usamos CQRS porque escrever votos e ler resultados são problemas completamente diferentes. O write side é otimizado para não perder dados e garantir integridade. O read side é otimizado para responder rápido e escalar. Isso nos permite suportar picos enormes sem comprometer consistência nem tempo real.”
