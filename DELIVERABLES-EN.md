@@ -9,7 +9,7 @@ This document consolidates all deliverables generated for **Section 4.1 (Overall
 ### 1️⃣ Overall Architecture Diagram
 
 #### 📄 Complete Documentation
-- **File**: [`overall-architecture-diagram-EN.md`](./overall-architecture-diagram-EN.md)
+- **File**: [`overall-architecture-diagram-EN.md`](./overall-architecture-diagram/overall-architecture-diagram-EN.md)
 - **Content**:
   - Interactive Mermaid diagram
   - Key architectural decisions
@@ -19,20 +19,20 @@ This document consolidates all deliverables generated for **Section 4.1 (Overall
   - Scalability strategies
 
 #### 🖼️ Diagram Images
-- **PNG (High resolution)**: [`overall-architecture-diagram-EN.png`](./overall-architecture-diagram-EN.png) - 216 KB
+- **PNG (High resolution)**: [`overall-architecture-diagram-EN.png`](./overall-architecture-diagram/image/overall-architecture-diagram-EN.png) - 216 KB
   - Raster format, ideal for presentations and documents
-- **SVG (Vector)**: [`overall-architecture-diagram-EN.svg`](./overall-architecture-diagram-EN.svg) - 44 KB
+- **SVG (Vector)**: [`overall-architecture-diagram-EN.svg`](./overall-architecture-diagram/image/overall-architecture-diagram-EN.svg) - 44 KB
   - Vector format, scalable without quality loss
 
 **Diagram Preview:**
-![Architecture Diagram](./overall-architecture-diagram-EN.png)
+![Architecture Diagram](./overall-architecture-diagram/image/overall-architecture-diagram-EN.png)
 
 ---
 
 ### 2️⃣ Use Case Diagram
 
 #### 📄 Complete Documentation
-- **File**: [`use-case-diagram-EN.md`](./use-case-diagram-EN.md)
+- **File**: [`use-case-diagram-EN.md`](./use-case-diagram/use-case-diagram-EN.md)
 - **Content**:
   - Mermaid diagram with 21 use cases
   - Complete details of each use case
@@ -44,13 +44,13 @@ This document consolidates all deliverables generated for **Section 4.1 (Overall
   - Prioritization (MVP, Phase 2, Phase 3)
 
 #### 🖼️ Diagram Images
-- **PNG (High resolution)**: [`use-case-diagram-EN.png`](./use-case-diagram-EN.png) - 293 KB
+- **PNG (High resolution)**: [`use-case-diagram-EN.png`](./use-case-diagram/image/use-case-diagram-EN.png) - 293 KB
   - Raster format, ideal for presentations and documents
-- **SVG (Vector)**: [`use-case-diagram-EN.svg`](./use-case-diagram-EN.svg) - 60 KB
+- **SVG (Vector)**: [`use-case-diagram-EN.svg`](./use-case-diagram/image/use-case-diagram-EN.svg) - 60 KB
   - Vector format, scalable without quality loss
 
 **Diagram Preview:**
-![Use Case Diagram](./use-case-diagram-EN.png)
+![Use Case Diagram](./use-case-diagram/image/use-case-diagram-EN.png)
 
 ---
 
