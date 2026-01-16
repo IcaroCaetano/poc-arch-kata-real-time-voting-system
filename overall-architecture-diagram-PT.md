@@ -145,11 +145,17 @@ graph TB
 ## Garantias do Sistema
 
 ✅ **Nenhum voto é perdido** - DynamoDB + Kafka com persistência
+
 ✅ **Um voto por usuário** - State Store + particionamento por userId
+
 ✅ **Exactly-once processing** - Kafka Streams com transações
+
 ✅ **Tempo real** - Redis + WebSocket
+
 ✅ **Auditável** - Eventos imutáveis no DynamoDB
+
 ✅ **Resiliente** - Arquitetura distribuída com failover
+
 ✅ **Escalável** - Suporta 250k votos/segundo em picos
 
 ## Escalabilidade
