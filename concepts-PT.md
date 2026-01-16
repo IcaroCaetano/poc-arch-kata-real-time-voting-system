@@ -166,3 +166,198 @@ No nosso caso:
 ## 🗣️ Explicação curta para o time (30 segundos)
 
 “Usamos CQRS porque escrever votos e ler resultados são problemas completamente diferentes. O write side é otimizado para não perder dados e garantir integridade. O read side é otimizado para responder rápido e escalar. Isso nos permite suportar picos enormes sem comprometer consistência nem tempo real.”
+
+--
+# 🧠 O que significa Exactly-Once Semantics?
+
+*Exactly-once significa:*
+
+*Cada evento* é processado uma única vez, nem zero, nem duas — exatamente uma.
+
+Ou seja:
+
+- O evento não pode ser perdido
+
+- O evento não pode ser processado duas vezes
+
+- Mesmo com:
+
+  - falhas
+
+  - retries
+
+  - crashes
+
+  - rede instável
+
+## 🔁 O problema real que o exactly-once resolve
+
+Em sistemas distribuídos, falhas são normais.
+
+Exemplo sem exactly-once:
+
+1. Um voto chega
+
+2. O sistema processa
+
+3. O sistema cai antes de confirmar
+
+4. O evento é reenviado
+
+5. O voto é contado duas vezes
+
+Ou o inverso:
+
+- O evento some → voto perdido
+
+### 📌 As três semânticas clássicas
+
+### 1️⃣ At-most-once
+
+- Processa no máximo uma vez
+
+- Pode perder eventos
+
+### ❌ Inaceitável para votação
+
+### 2️⃣ At-least-once
+
+- Processa uma ou mais vezes
+
+- Não perde eventos
+
+### ❌ Pode contar voto duplicado
+
+### 3️⃣ Exactly-once ✅
+
+- Processa exatamente uma vez
+
+- Não perde
+
+- Não duplica
+
+- ✔️ Obrigatório para votação
+
+## 🧬 Exactly-once no seu sistema de votação
+
+No seu desenho, exactly-once é garantido em camadas, não por mágica.
+
+### 1️⃣ Kafka como base
+
+Kafka:
+
+Persiste eventos
+
+Mantém ordenação por partição
+
+Permite replay
+
+Mas Kafka sozinho não garante exactly-once.
+
+2️⃣ Kafka Streams (EOS v2)
+
+Kafka Streams oferece Exactly-Once Semantics (EOS):
+
+Ele garante que:
+
+Ler evento
+
+Atualizar State Store
+
+Produzir resultado
+
+Commit de offsets
+
+👉 Tudo acontece de forma atômica.
+
+Se o processo cair:
+
+Ou tudo foi aplicado
+
+Ou nada foi aplicado
+
+3️⃣ State Stores para deduplicação
+
+As State Stores:
+
+Guardam o estado local do processamento
+
+Registram quais userId já votaram
+
+Quando um voto chega:
+
+Se o usuário já existe na store → rejeita
+
+Se não existe → processa e grava
+
+Isso evita:
+
+Retries
+
+Eventos duplicados
+
+Replays acidentais
+
+4️⃣ Particionamento por userId
+
+Ao particionar por userId:
+
+Todos os votos do mesmo usuário vão para a mesma partição
+
+Mantemos ordem garantida
+
+Eliminamos race conditions
+
+5️⃣ Escrita consistente no DynamoDB
+
+O processamento só confirma o offset:
+
+Depois de atualizar a store
+
+Depois de persistir o voto
+
+Depois de atualizar a contagem
+
+Isso fecha o ciclo do exactly-once.
+
+📊 Visão resumida do fluxo
+Evento chega
+   ↓
+Kafka Streams lê
+   ↓
+Verifica State Store
+   ↓
+Atualiza contagem
+   ↓
+Persiste no DynamoDB
+   ↓
+Commit atômico
+
+
+Se algo falhar → rollback automático.
+
+⚠️ Ponto importante (sempre explique)
+
+Exactly-once NÃO significa:
+
+Zero latência
+
+Zero complexidade
+
+Zero custo
+
+Significa:
+
+Mais controle
+
+Mais estado
+
+Mais disciplina arquitetural
+
+🗣️ Explicação curta para o time (20–30 segundos)
+
+“Exactly-once significa que cada voto será processado uma única vez, mesmo se houver falhas, retries ou quedas de serviço. Usamos Kafka Streams com state stores e particionamento por usuário para garantir que nenhum voto seja perdido e nenhum seja contado duas vezes.”
+
+🧠 Frase de ouro para banca / revisão técnica
+
+“Exactly-once não é uma feature isolada, é uma propriedade emergente da combinação entre processamento transacional, estado local e controle de offsets.”
