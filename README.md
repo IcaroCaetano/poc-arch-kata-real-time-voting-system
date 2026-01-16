@@ -1,0 +1,1 @@
+# poc-arch-kata-real-time-voting-system
