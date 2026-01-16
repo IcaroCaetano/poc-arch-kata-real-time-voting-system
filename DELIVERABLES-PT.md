@@ -181,7 +181,7 @@ Este documento consolida todos os entregáveis gerados para a **Seção 4.1 (Ove
 ## 🔗 Referências
 
 - **Documento Base**: [`overall-diagrams-PT.md`](./overall-diagrams-PT.md)
-- **Plano de Pesquisa**: [`plan-PT.md`](./plan-PT.md)
+- **Plano de Pesquisa**: [`plan-PT.md`](./plan.md)
 - **Conceitos (PT)**: [`concepts-PT.md`](./concepts-PT.md)
 - **Conceitos (EN)**: [`concepts-EN.md`](./concepts-EN.md)
 
